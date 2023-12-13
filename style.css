@@ -24,7 +24,7 @@ a:visited {
     gap: 3rem;
 }
 
-.wrapper {
+.board {
     display: grid;
     grid-template-rows: repeat(3, 1fr);
     grid-template-columns: repeat(3, 1fr);
@@ -34,7 +34,8 @@ a:visited {
     border: 1px solid red;
 }
 
-.box {
+.tile {
     border: 0.5px solid blue;
     background-color: hsl(0, 0%, 80%);
+    cursor: pointer;
 }
