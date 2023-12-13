@@ -1,8 +1,7 @@
 game = (function () {
-	function Tile(initIndex) {
-		// Init tile
+	function Tile(index) {
+		// Init
 		let marker = 0;
-		const index = initIndex;
 		const tile = document.createElement("div");
 		tile.classList.add("tile");
 		tile.setAttribute("index", index);
@@ -22,11 +21,7 @@ game = (function () {
 			return tile;
 		}
 
-		function getIndex() {
-			return index;
-		}
-
-		return { setMarker, getMarker, getTile, getIndex };
+		return { setMarker, getMarker, getTile };
 	}
 
 	const player1 = (function () {
@@ -59,9 +54,7 @@ game = (function () {
 	fillBoard();
 
 	// Bind events
-	boardNode.addEventListener("click", (e) => {
-		setTileMarker(e);
-	});
+	boardNode.addEventListener("click", (e) => setTileMarker(e));
 
 	// Functions
 	function fillBoard() {
@@ -73,18 +66,38 @@ game = (function () {
 	}
 
 	function setTileMarker(e) {
-		const tileIndex = e.target.getAttribute("index");
+		let tileIndex;
+		if (typeof e === "number") {
+			tileIndex = e;
+		} else {
+			if (!e.target.classList.contains("tile")) return;
+			tileIndex = e.target.getAttribute("index");
+		}
+
 		const tile = board[tileIndex];
 
 		tile.setMarker(currentPlayer.getMarker());
-		console.log(tile.getMarker());
+		currentPlayer = currentPlayer === player1 ? player2 : player1;
+
+		// checkWin();
 		render();
 	}
 
+	function checkWin() {
+		pass;
+	}
+
+	// function unflattenBoard() {
+	// 	for ((tile, index) of board){
+	//         if tile
+	//     };
+	// }
+
 	function render() {
-		console.log(tileNodes);
 		tileNodes.forEach((tileNode, index) => {
 			tileNode.style.backgroundColor = board[index].getMarker();
 		});
 	}
+
+	return { setTileMarker };
 })();

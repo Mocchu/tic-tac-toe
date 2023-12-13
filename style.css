@@ -31,11 +31,11 @@ a:visited {
     width: 50svh;
     height: 50svh;
 
-    border: 1px solid red;
+    border: 1px solid white;
 }
 
 .tile {
-    border: 0.5px solid blue;
+    border: 0.5px solid white;
     background-color: hsl(0, 0%, 80%);
     cursor: pointer;
 }
