@@ -8,41 +8,22 @@ game = (function () {
 
 		// Functions
 		function setMarker(newMarker) {
-			if (marker === 0) {
-				marker = newMarker;
-			}
+			if (marker === 0) marker = newMarker;
 		}
-
-		function getMarker() {
-			return marker;
-		}
-
-		function getTile() {
-			return tile;
-		}
+		getMarker = () => marker;
+		getTile = () => tile;
 
 		return { setMarker, getMarker, getTile };
 	}
 
-	const player1 = (function () {
-		const marker = "red";
-
-		function getMarker() {
-			return marker;
-		}
-
+	const Player = function (markerInit) {
+		const marker = markerInit;
+		getMarker = () => marker;
 		return { getMarker };
-	})();
+	};
 
-	const player2 = (function () {
-		const marker = "blue";
-
-		function getMarker() {
-			return marker;
-		}
-
-		return { getMarker };
-	})();
+	player1 = Player("blue");
+	player2 = Player("red");
 
 	// Cache DOM
 	const boardNode = document.querySelector(".board");
