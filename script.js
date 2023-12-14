@@ -1,15 +1,15 @@
 game = (function () {
 	function Tile(index) {
 		// Init
-		let marker = 0;
+		let marker = false;
 		const tile = document.createElement("div");
 		tile.classList.add("tile");
 		tile.setAttribute("index", index);
 
 		// Functions
-		function setMarker(newMarker) {
-			if (marker === 0) marker = newMarker;
-		}
+		setMarker = (newMarker) => {
+			if (!marker) marker = newMarker;
+		};
 		getMarker = () => marker;
 		getTile = () => tile;
 
@@ -22,15 +22,14 @@ game = (function () {
 		return { getMarker };
 	};
 
-	player1 = Player("blue");
-	player2 = Player("red");
-
 	// Cache DOM
 	const boardNode = document.querySelector(".board");
 	const tileNodes = boardNode.childNodes;
 
 	// Init game
 	let board = [];
+	const player1 = Player("blue");
+	const player2 = Player("red");
 	let currentPlayer = player1;
 	fillBoard();
 
@@ -63,20 +62,25 @@ game = (function () {
 	}
 
 	function checkWin() {
-		pass;
+		const unflatBoard = unflattenBoard();
 	}
 
-	// function unflattenBoard() {
-	// 	for ((tile, index) of board){
-	//         if tile
-	//     };
-	// }
+	function unflattenBoard() {
+		const unflatBoard = [[], [], []];
+
+		for (let i = 0; i < 3; i++) {
+			unflatBoard[i] = board.slice(i * 3, (i + 1) * 3);
+		}
+		return unflatBoard;
+	}
 
 	function render() {
 		tileNodes.forEach((tileNode, index) => {
 			tileNode.style.backgroundColor = board[index].getMarker();
 		});
 	}
+
+	unflattenBoard();
 
 	return { setTileMarker };
 })();
