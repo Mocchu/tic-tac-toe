@@ -47,16 +47,14 @@ game = (function () {
 	}
 
 	function setTileMarker(e) {
-		let tileIndex;
-		if (typeof e === "number") {
-			tileIndex = e;
-		} else {
-			if (!e.target.classList.contains("tile")) return;
-			tileIndex = e.target.getAttribute("index");
-		}
+		// param: e = event or index (int)
+		if (typeof e === "object" && !e.target.classList.contains("tile"))
+			return;
+
+		const tileIndex =
+			typeof e === "object" ? e.target.getAttribute("index") : e;
 
 		const tile = board[tileIndex];
-
 		tile.setMarker(currentPlayer.getMarker());
 		currentPlayer = currentPlayer === player1 ? player2 : player1;
 
