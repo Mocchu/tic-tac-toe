@@ -60,12 +60,19 @@ game = (function () {
 		tile.setMarker(currentPlayer.getMarker());
 		currentPlayer = currentPlayer === player1 ? player2 : player1;
 
-		// checkWin();
+		console.log(checkWin());
 		render();
 	}
 
 	function checkWin() {
 		const unflatBoard = unflattenBoard();
+		if (
+			checkDiagonalWin(unflatBoard) ||
+			checkRowOrColumnWin(unflatBoard, "row") ||
+			checkRowOrColumnWin(unflatBoard, "column")
+		)
+			return true;
+		return false;
 	}
 
 	function unflattenBoard() {
@@ -75,6 +82,40 @@ game = (function () {
 			unflatBoard[i] = board.slice(i * 3, (i + 1) * 3);
 		}
 		return unflatBoard;
+	}
+
+	function checkRowOrColumnWin(unflatBoard, direction) {
+		// :param direction: "row" || "column"
+		if (direction !== "row" && direction !== "column") return;
+
+		for (let row = 0; row < 3; row++) {
+			let markers = [];
+			for (let col = 0; col < 3; col++) {
+				const i = direction === "row" ? row : col;
+				const j = direction === "row" ? col : row;
+				markers.push(unflatBoard[i][j].getMarker());
+			}
+			if (
+				markers[0] === markers[1] &&
+				markers[1] === markers[2] &&
+				markers[0] !== false
+			)
+				return true;
+		}
+		return false;
+	}
+
+	function checkDiagonalWin(unflatBoard) {
+		const nw = unflatBoard[0][0].getMarker();
+		const center = unflatBoard[1][1].getMarker();
+		const se = unflatBoard[2][2].getMarker();
+		const ne = unflatBoard[0][2].getMarker();
+		const sw = unflatBoard[2][0].getMarker();
+
+		return (
+			(nw === center && center === se && nw !== false) ||
+			(ne === center && center === sw && ne !== false)
+		);
 	}
 
 	function render() {
