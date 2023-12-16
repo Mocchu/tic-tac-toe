@@ -17,14 +17,17 @@ game = (function () {
 		const name = nameInit;
 		const marker = markerInit;
 
+		setName = (newName) => (name = newName);
 		getMarker = () => marker;
 		getName = () => name;
 
-		return { getMarker, getName };
+		return { setName, getMarker, getName };
 	};
 
 	// Cache DOM
 	const menuNode = document.querySelector(".menu");
+	const player1Name = document.querySelector("#player-1-name").value;
+	const player2Name = document.querySelector("#player-2-name").value;
 	const startGameBtn = document.querySelector(".start-game");
 	const gameNode = document.querySelector(".game");
 	const boardNode = document.querySelector(".board");
@@ -44,18 +47,21 @@ game = (function () {
 	resetGameBtn.addEventListener("click", resetBoard);
 
 	boardNode.addEventListener("click", (e) => {
+		// Triggers when a tile is clicked on
 		setTileMarker(e);
 
 		if (checkWin()) {
-			displayGameover("win/loss");
+			displayGameover(`${currentPlayer.getName} won!`);
 		} else if (checkBoardFull()) {
-			displayGameover("tie");
+			displayGameover("It's a tie");
 		}
 		render();
 	});
 
 	startGameBtn.addEventListener("click", (e) => {
 		e.preventDefault();
+		if (player1Name) player1.setName(player1Name);
+		if (player2Name) player2.setName(player2Name);
 		displayGame();
 	});
 
