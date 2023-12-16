@@ -29,11 +29,11 @@ game = (function () {
 	const startGameBtn = document.querySelector(".start-game");
 	const gameNode = document.querySelector(".game");
 	const boardNode = document.querySelector(".board");
-	const tileNodes = boardNode.childNodes;
 	const resetBoardBtn = document.querySelector(".reset-board");
 	const gameOverNode = document.querySelector(".gameover");
 	const gameOverMsg = document.querySelector(".gameover-msg");
 	const playAgainBtn = document.querySelector(".play-again");
+	const tileNodes = boardNode.childNodes;
 
 	// Init game
 	let board = [];
@@ -44,6 +44,7 @@ game = (function () {
 
 	// Bind events
 	resetBoardBtn.addEventListener("click", resetBoard);
+	playAgainBtn.addEventListener("click", playAgain);
 
 	boardNode.addEventListener("click", (e) => {
 		// Triggers when a tile is clicked on
@@ -66,8 +67,6 @@ game = (function () {
 		if (player2Name) player2.setName(player2Name);
 		displayGame();
 	});
-
-	playAgainBtn.addEventListener("click", playAgain);
 
 	// Define functions
 	function displayGame() {
@@ -143,7 +142,7 @@ game = (function () {
 		}
 		return true;
 
-		// WHY THIS DOESNT WORK YO ???????????
+		// why doesnt this work .-.
 		// board.forEach((tile) => {
 		// 	if (!tile.getMarker()) return false;
 		// });
@@ -157,7 +156,7 @@ game = (function () {
 		for (let row = 0; row < 3; row++) {
 			let markers = [];
 			for (let col = 0; col < 3; col++) {
-				// Reverse indexes based on direction argument
+				// Swap indexes based on direction argument
 				const i = direction === "row" ? row : col;
 				const j = direction === "row" ? col : row;
 				markers.push(unflatBoard[i][j].getMarker());
