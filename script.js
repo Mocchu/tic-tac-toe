@@ -1,13 +1,11 @@
 game = (function () {
 	// Define objects
 	function Tile(index) {
-		// Init
 		let marker = false;
 		const tile = document.createElement("div");
 		tile.classList.add("tile");
 		tile.setAttribute("index", index);
 
-		// Functions
 		setMarker = (newMarker) => (marker = newMarker);
 		getMarker = () => marker;
 		getTile = () => tile;
@@ -18,13 +16,21 @@ game = (function () {
 	const Player = function (nameInit, markerInit) {
 		const name = nameInit;
 		const marker = markerInit;
+
 		getMarker = () => marker;
 		getName = () => name;
+
 		return { getMarker, getName };
 	};
 
 	// Cache DOM
+	const menuNode = document.querySelector(".menu");
+	const startGameBtn = document.querySelector(".start-game");
+	const gameNode = document.querySelector(".game");
 	const boardNode = document.querySelector(".board");
+	const resetGameBtn = document.querySelector(".reset-game");
+	const gameOverNode = document.querySelector(".gameover");
+	const gameOverMsg = document.querySelector(".gameover-msg");
 	const tileNodes = boardNode.childNodes;
 
 	// Init game
@@ -36,8 +42,22 @@ game = (function () {
 
 	// Bind events
 	boardNode.addEventListener("click", (e) => setTileMarker(e));
+	resetGameBtn.addEventListener("click", resetBoard);
+	startGameBtn.addEventListener("click", (e) => {
+		e.preventDefault();
+		displayGame();
+	});
 
 	// Define functions
+	function displayGame() {
+		[menuNode, gameNode].forEach((x) => x.classList.toggle("hidden"));
+	}
+
+	function displayWin() {
+		[boardNode, gameOverNode].forEach((x) => x.classList.toggle("hidden"));
+		gameOverMsg.textContent = "hello";
+	}
+
 	function fillBoard() {
 		for (let index = 0; index < 9; index++) {
 			const tile = Tile(index);
@@ -46,8 +66,16 @@ game = (function () {
 		}
 	}
 
+	function resetBoard() {
+		board = [];
+		boardNode.innerHTML = "";
+		fillBoard();
+	}
+
 	function setTileMarker(e) {
 		// :param e: event or index (int)
+
+		// Set tile status and set current player
 		if (typeof e === "object" && !e.target.classList.contains("tile"))
 			return;
 
@@ -55,12 +83,14 @@ game = (function () {
 			typeof e === "object" ? e.target.getAttribute("index") : e;
 		const tile = board[tileIndex];
 
-		if (tile.getMarker() !== false) return;
+		if (tile.getMarker() !== false) return; // Only edit empty tiles
 
 		tile.setMarker(currentPlayer.getMarker());
 		currentPlayer = currentPlayer === player1 ? player2 : player1;
 
-		console.log(checkWin());
+		// Check for win
+		if (checkWin()) displayWin();
+
 		render();
 	}
 
@@ -91,6 +121,7 @@ game = (function () {
 		for (let row = 0; row < 3; row++) {
 			let markers = [];
 			for (let col = 0; col < 3; col++) {
+				// Reverse indexes based on direction argument
 				const i = direction === "row" ? row : col;
 				const j = direction === "row" ? col : row;
 				markers.push(unflatBoard[i][j].getMarker());
@@ -98,7 +129,7 @@ game = (function () {
 			if (
 				markers[0] === markers[1] &&
 				markers[1] === markers[2] &&
-				markers[0] !== false
+				markers[0] !== false // Stop empty tiles winning
 			)
 				return true;
 		}
