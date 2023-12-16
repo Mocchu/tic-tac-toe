@@ -31,10 +31,11 @@ game = (function () {
 	const startGameBtn = document.querySelector(".start-game");
 	const gameNode = document.querySelector(".game");
 	const boardNode = document.querySelector(".board");
-	const resetGameBtn = document.querySelector(".reset-game");
+	const tileNodes = boardNode.childNodes;
+	const resetBoardBtn = document.querySelector(".reset-board");
 	const gameOverNode = document.querySelector(".gameover");
 	const gameOverMsg = document.querySelector(".gameover-msg");
-	const tileNodes = boardNode.childNodes;
+	const playAgainBtn = document.querySelector(".play-again");
 
 	// Init game
 	let board = [];
@@ -44,14 +45,14 @@ game = (function () {
 	fillBoard();
 
 	// Bind events
-	resetGameBtn.addEventListener("click", resetBoard);
+	resetBoardBtn.addEventListener("click", resetBoard);
 
 	boardNode.addEventListener("click", (e) => {
 		// Triggers when a tile is clicked on
 		setTileMarker(e);
 
 		if (checkWin()) {
-			displayGameover(`${currentPlayer.getName} won!`);
+			displayGameover(`${currentPlayer.getName()} won!`);
 		} else if (checkBoardFull()) {
 			displayGameover("It's a tie");
 		}
@@ -65,6 +66,8 @@ game = (function () {
 		displayGame();
 	});
 
+	playAgainBtn.addEventListener("click", playAgain);
+
 	// Define functions
 	function displayGame() {
 		[menuNode, gameNode].forEach((x) => x.classList.toggle("hidden"));
@@ -73,7 +76,7 @@ game = (function () {
 	function displayGameover(msg) {
 		if (typeof msg !== "string") return;
 
-		[boardNode, gameOverNode].forEach((x) => x.classList.toggle("hidden"));
+		[gameNode, gameOverNode].forEach((x) => x.classList.toggle("hidden"));
 		gameOverMsg.textContent = msg;
 	}
 
@@ -89,6 +92,12 @@ game = (function () {
 		board = [];
 		boardNode.innerHTML = "";
 		fillBoard();
+	}
+
+	function playAgain() {
+		resetBoard();
+		fillBoard();
+		[gameNode, gameOverNode].forEach((x) => x.classList.toggle("hidden"));
 	}
 
 	function setTileMarker(e) {
