@@ -41,8 +41,19 @@ game = (function () {
 	fillBoard();
 
 	// Bind events
-	boardNode.addEventListener("click", (e) => setTileMarker(e));
 	resetGameBtn.addEventListener("click", resetBoard);
+
+	boardNode.addEventListener("click", (e) => {
+		setTileMarker(e);
+
+		if (checkWin()) {
+			displayGameover("win/loss");
+		} else if (checkBoardFull()) {
+			displayGameover("tie");
+		}
+		render();
+	});
+
 	startGameBtn.addEventListener("click", (e) => {
 		e.preventDefault();
 		displayGame();
@@ -53,9 +64,11 @@ game = (function () {
 		[menuNode, gameNode].forEach((x) => x.classList.toggle("hidden"));
 	}
 
-	function displayWin() {
+	function displayGameover(msg) {
+		if (typeof msg !== "string") return;
+
 		[boardNode, gameOverNode].forEach((x) => x.classList.toggle("hidden"));
-		gameOverMsg.textContent = "hello";
+		gameOverMsg.textContent = msg;
 	}
 
 	function fillBoard() {
@@ -75,7 +88,7 @@ game = (function () {
 	function setTileMarker(e) {
 		// :param e: event or index (int)
 
-		// Set tile status and set current player
+		// Set tile marker and set current player
 		if (typeof e === "object" && !e.target.classList.contains("tile"))
 			return;
 
@@ -87,11 +100,6 @@ game = (function () {
 
 		tile.setMarker(currentPlayer.getMarker());
 		currentPlayer = currentPlayer === player1 ? player2 : player1;
-
-		// Check for win
-		if (checkWin()) displayWin();
-
-		render();
 	}
 
 	function checkWin() {
@@ -112,6 +120,19 @@ game = (function () {
 			unflatBoard[i] = board.slice(i * 3, (i + 1) * 3);
 		}
 		return unflatBoard;
+	}
+
+	function checkBoardFull() {
+		for (let tile of board) {
+			if (!tile.getMarker()) return false;
+		}
+		return true;
+
+		// WHY THIS DOESNT WORK YO ???????????
+		// board.forEach((tile) => {
+		// 	if (!tile.getMarker()) return false;
+		// });
+		// return true;
 	}
 
 	function checkRowOrColumnWin(unflatBoard, direction) {
