@@ -1,4 +1,5 @@
 game = (function () {
+	// Define objects
 	function Tile(index) {
 		// Init
 		let marker = false;
@@ -7,19 +8,19 @@ game = (function () {
 		tile.setAttribute("index", index);
 
 		// Functions
-		setMarker = (newMarker) => {
-			if (!marker) marker = newMarker;
-		};
+		setMarker = (newMarker) => (marker = newMarker);
 		getMarker = () => marker;
 		getTile = () => tile;
 
 		return { setMarker, getMarker, getTile };
 	}
 
-	const Player = function (markerInit) {
+	const Player = function (nameInit, markerInit) {
+		const name = nameInit;
 		const marker = markerInit;
 		getMarker = () => marker;
-		return { getMarker };
+		getName = () => name;
+		return { getMarker, getName };
 	};
 
 	// Cache DOM
@@ -28,15 +29,15 @@ game = (function () {
 
 	// Init game
 	let board = [];
-	const player1 = Player("blue");
-	const player2 = Player("red");
+	const player1 = Player("Player 1", "blue");
+	const player2 = Player("Player 2", "red");
 	let currentPlayer = player1;
 	fillBoard();
 
 	// Bind events
 	boardNode.addEventListener("click", (e) => setTileMarker(e));
 
-	// Functions
+	// Define functions
 	function fillBoard() {
 		for (let index = 0; index < 9; index++) {
 			const tile = Tile(index);
@@ -46,14 +47,16 @@ game = (function () {
 	}
 
 	function setTileMarker(e) {
-		// param: e = event or index (int)
+		// :param e: event or index (int)
 		if (typeof e === "object" && !e.target.classList.contains("tile"))
 			return;
 
 		const tileIndex =
 			typeof e === "object" ? e.target.getAttribute("index") : e;
-
 		const tile = board[tileIndex];
+
+		if (tile.getMarker() !== false) return;
+
 		tile.setMarker(currentPlayer.getMarker());
 		currentPlayer = currentPlayer === player1 ? player2 : player1;
 
