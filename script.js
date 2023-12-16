@@ -14,7 +14,7 @@ game = (function () {
 	}
 
 	const Player = function (nameInit, markerInit) {
-		const name = nameInit;
+		let name = nameInit;
 		const marker = markerInit;
 
 		setName = (newName) => (name = newName);
@@ -26,8 +26,6 @@ game = (function () {
 
 	// Cache DOM
 	const menuNode = document.querySelector(".menu");
-	const player1Name = document.querySelector("#player-1-name").value;
-	const player2Name = document.querySelector("#player-2-name").value;
 	const startGameBtn = document.querySelector(".start-game");
 	const gameNode = document.querySelector(".game");
 	const boardNode = document.querySelector(".board");
@@ -60,7 +58,10 @@ game = (function () {
 	});
 
 	startGameBtn.addEventListener("click", (e) => {
+		const player1Name = document.querySelector("#player-1-name").value;
+		const player2Name = document.querySelector("#player-2-name").value;
 		e.preventDefault();
+
 		if (player1Name) player1.setName(player1Name);
 		if (player2Name) player2.setName(player2Name);
 		displayGame();
@@ -96,7 +97,6 @@ game = (function () {
 
 	function playAgain() {
 		resetBoard();
-		fillBoard();
 		[gameNode, gameOverNode].forEach((x) => x.classList.toggle("hidden"));
 	}
 
@@ -190,8 +190,6 @@ game = (function () {
 			tileNode.style.backgroundColor = board[index].getMarker();
 		});
 	}
-
-	unflattenBoard();
 
 	return { setTileMarker };
 })();
