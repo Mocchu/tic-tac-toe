@@ -25,15 +25,21 @@ a:visited {
 }
 
 h1 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: 700;
-    text-shadow: 0 7px 3px black;
+    text-shadow: 0 5px 3px black;
+}
+
+button {
+    margin: 0.25rem 0;
+    width: 6rem;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.664);
 }
 
 .container {
     display: grid;
     place-items: center;
-    gap: 3rem;
+    gap: 2rem;
 }
 
 .menu ul,
@@ -57,6 +63,11 @@ h1 {
     align-items: center;
 }
 
+.buttons {
+    display: flex;
+    gap: 1rem;
+}
+
 .reset-game {
     width: 6rem;
 }
@@ -73,19 +84,18 @@ h1 {
     grid-template-columns: repeat(3, 1fr);
 
     border: 1px solid white;
-    box-shadow: 0 0 150px 5px #92e0ff8a
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.664), 0 0 150px 5px #92e0ff8a;
 }
 
 .tile {
     border: 0.5px solid white;
     background-color: hsl(0, 0%, 80%);
     cursor: pointer;
-    /* transition: filter 1s ease-in-out; */
 }
 
 .tile:hover {
     filter: brightness(1.05);
-    transition: filter 0.075s ease-in-out;
+    transition: filter 0.1s ease-in-out;
 }
 
 .gameover {
@@ -96,8 +106,9 @@ h1 {
 }
 
 .gameover-msg {
-    margin: 1rem 0;
-    height: 1rem;
+    margin: 2rem 0;
+    height: 1.25rem;
+    font-size: 1.25rem;
 }
 
 footer {

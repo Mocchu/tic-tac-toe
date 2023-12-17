@@ -30,6 +30,7 @@ game = (function () {
 	const gameNode = document.querySelector(".game");
 	const boardNode = document.querySelector(".board");
 	const resetBoardBtn = document.querySelector(".reset-board");
+	const gotoMenuBtn = document.querySelector(".goto-menu");
 	const gameOverMsg = document.querySelector(".gameover-msg");
 	const tileNodes = boardNode.childNodes;
 
@@ -42,6 +43,10 @@ game = (function () {
 
 	// Bind events
 	resetBoardBtn.addEventListener("click", resetBoard);
+	gotoMenuBtn.addEventListener("click", () => {
+		resetBoard();
+		displayGame();
+	});
 
 	boardNode.addEventListener("click", (e) => {
 		// Triggers when a tile is clicked on
@@ -56,12 +61,14 @@ game = (function () {
 	});
 
 	startGameBtn.addEventListener("click", (e) => {
-		const player1Name = document.querySelector("#player-1-name").value;
-		const player2Name = document.querySelector("#player-2-name").value;
-		e.preventDefault();
+		const player1Name = document.querySelector("#player-1-name");
+		const player2Name = document.querySelector("#player-2-name");
 
-		if (player1Name) player1.setName(player1Name);
-		if (player2Name) player2.setName(player2Name);
+		if (player1Name.value) player1.setName(player1Name.value);
+		if (player2Name.value) player2.setName(player2Name.value);
+		[player1Name, player2Name].forEach((x) => (x.value = ""));
+
+		e.preventDefault();
 		displayGame();
 	});
 
@@ -74,7 +81,6 @@ game = (function () {
 		if (typeof msg !== "string") return;
 
 		tileNodes.forEach((tile) => (tile.style.pointerEvents = "none"));
-		// gameOverNode.classList.toggle("hidden");
 		gameOverMsg.textContent = msg;
 	}
 
