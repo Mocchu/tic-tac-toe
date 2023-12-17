@@ -30,9 +30,7 @@ game = (function () {
 	const gameNode = document.querySelector(".game");
 	const boardNode = document.querySelector(".board");
 	const resetBoardBtn = document.querySelector(".reset-board");
-	const gameOverNode = document.querySelector(".gameover");
 	const gameOverMsg = document.querySelector(".gameover-msg");
-	// const playAgainBtn = document.querySelector(".play-again");
 	const tileNodes = boardNode.childNodes;
 
 	// Init game
@@ -44,7 +42,6 @@ game = (function () {
 
 	// Bind events
 	resetBoardBtn.addEventListener("click", resetBoard);
-	// playAgainBtn.addEventListener("click", playAgain);
 
 	boardNode.addEventListener("click", (e) => {
 		// Triggers when a tile is clicked on
@@ -97,11 +94,6 @@ game = (function () {
 
 		fillBoard();
 	}
-
-	// function playAgain() {
-	// 	resetBoard();
-	// 	[gameNode, gameOverNode].forEach((x) => x.classList.toggle("hidden"));
-	// }
 
 	function setTileMarker(e) {
 		// :param e: event or index (int)
