@@ -85,7 +85,12 @@ h1 {
     background-color: hsl(0, 0%, 80%);
     display: grid;
     place-items: center;
-    color: black;
+    color: white;
+}
+
+.gameover-msg {
+    margin: 1rem 0;
+    height: 1rem;
 }
 
 footer {

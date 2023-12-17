@@ -32,7 +32,7 @@ game = (function () {
 	const resetBoardBtn = document.querySelector(".reset-board");
 	const gameOverNode = document.querySelector(".gameover");
 	const gameOverMsg = document.querySelector(".gameover-msg");
-	const playAgainBtn = document.querySelector(".play-again");
+	// const playAgainBtn = document.querySelector(".play-again");
 	const tileNodes = boardNode.childNodes;
 
 	// Init game
@@ -44,7 +44,7 @@ game = (function () {
 
 	// Bind events
 	resetBoardBtn.addEventListener("click", resetBoard);
-	playAgainBtn.addEventListener("click", playAgain);
+	// playAgainBtn.addEventListener("click", playAgain);
 
 	boardNode.addEventListener("click", (e) => {
 		// Triggers when a tile is clicked on
@@ -76,7 +76,8 @@ game = (function () {
 	function displayGameover(msg) {
 		if (typeof msg !== "string") return;
 
-		[gameNode, gameOverNode].forEach((x) => x.classList.toggle("hidden"));
+		tileNodes.forEach((tile) => (tile.style.pointerEvents = "none"));
+		// gameOverNode.classList.toggle("hidden");
 		gameOverMsg.textContent = msg;
 	}
 
@@ -91,13 +92,16 @@ game = (function () {
 	function resetBoard() {
 		board = [];
 		boardNode.innerHTML = "";
+		gameOverMsg.textContent = "";
+		tileNodes.forEach((tile) => (tile.style.pointerEvents = "auto"));
+
 		fillBoard();
 	}
 
-	function playAgain() {
-		resetBoard();
-		[gameNode, gameOverNode].forEach((x) => x.classList.toggle("hidden"));
-	}
+	// function playAgain() {
+	// 	resetBoard();
+	// 	[gameNode, gameOverNode].forEach((x) => x.classList.toggle("hidden"));
+	// }
 
 	function setTileMarker(e) {
 		// :param e: event or index (int)
