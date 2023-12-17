@@ -6,4 +6,4 @@ Tic-tac-toe game created using HTML, CSS &amp; JS
 
 [👉 Live Demo](https://mocchu.github.io/tic-tac-toe/)
 
-<img src="img/sc.png" width="825" />
+<img src="img/sc.png" width="425" />
