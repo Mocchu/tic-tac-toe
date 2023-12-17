@@ -35,8 +35,8 @@ game = (function () {
 
 	// Init game
 	let board = [];
-	const player1 = Player("Player 1", "blue");
-	const player2 = Player("Player 2", "red");
+	const player1 = Player("Player 1", "#29ab9a");
+	const player2 = Player("Player 2", "#e0b02b");
 	let currentPlayer = player1;
 	fillBoard();
 
