@@ -110,9 +110,8 @@ game = (function () {
 		if (typeof e === "object" && !e.target.classList.contains("tile"))
 			return;
 
-		const tileIndex =
-			typeof e === "object" ? e.target.getAttribute("index") : e;
-		const tile = board[tileIndex];
+		const tile =
+			board[typeof e === "object" ? e.target.getAttribute("index") : e];
 
 		// Only edit empty tiles
 		if (tile.getMarker() !== false) return;
@@ -184,5 +183,5 @@ game = (function () {
 		});
 	}
 
-	return { setTileMarker };
+	return { setTileMarker, render };
 })();
