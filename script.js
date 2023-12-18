@@ -139,16 +139,7 @@ game = (function () {
 	}
 
 	function checkBoardFull() {
-		for (let tile of board) {
-			if (!tile.getMarker()) return false;
-		}
-		return true;
-
-		// why doesnt this work .-.
-		// board.forEach((tile) => {
-		// 	if (!tile.getMarker()) return false;
-		// });
-		// return true;
+		return board.every((tile) => tile.getMarker());
 	}
 
 	function checkRowOrColumnWin(unflatBoard, direction) {
