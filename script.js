@@ -43,6 +43,7 @@ game = (function () {
 
 	// Bind events
 	resetBoardBtn.addEventListener("click", resetBoard);
+
 	gotoMenuBtn.addEventListener("click", () => {
 		resetBoard();
 		displayGame();
@@ -80,6 +81,7 @@ game = (function () {
 	function displayGameover(msg) {
 		if (typeof msg !== "string") return;
 
+		// Disable tile clicking on gameover
 		tileNodes.forEach((tile) => (tile.style.pointerEvents = "none"));
 		gameOverMsg.textContent = msg;
 	}
@@ -112,7 +114,8 @@ game = (function () {
 			typeof e === "object" ? e.target.getAttribute("index") : e;
 		const tile = board[tileIndex];
 
-		if (tile.getMarker() !== false) return; // Only edit empty tiles
+		// Only edit empty tiles
+		if (tile.getMarker() !== false) return;
 
 		tile.setMarker(currentPlayer.getMarker());
 		currentPlayer = currentPlayer === player1 ? player2 : player1;
@@ -120,13 +123,11 @@ game = (function () {
 
 	function checkWin() {
 		const unflatBoard = unflattenBoard();
-		if (
+		return (
 			checkDiagonalWin(unflatBoard) ||
 			checkRowOrColumnWin(unflatBoard, "row") ||
 			checkRowOrColumnWin(unflatBoard, "column")
-		)
-			return true;
-		return false;
+		);
 	}
 
 	function unflattenBoard() {
