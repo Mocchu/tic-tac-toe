@@ -62,13 +62,7 @@ game = (function () {
 	});
 
 	startGameBtn.addEventListener("click", (e) => {
-		const player1Name = document.querySelector("#player-1-name");
-		const player2Name = document.querySelector("#player-2-name");
-
-		if (player1Name.value) player1.setName(player1Name.value);
-		if (player2Name.value) player2.setName(player2Name.value);
-		[player1Name, player2Name].forEach((x) => (x.value = ""));
-
+		setPlayerNames();
 		e.preventDefault();
 		displayGame();
 	});
@@ -79,8 +73,6 @@ game = (function () {
 	}
 
 	function displayGameover(msg) {
-		if (typeof msg !== "string") return;
-
 		// Disable tile clicking on gameover
 		tileNodes.forEach((tile) => (tile.style.pointerEvents = "none"));
 		gameOverMsg.textContent = msg;
@@ -175,6 +167,15 @@ game = (function () {
 			(nw === center && center === se && nw !== false) ||
 			(ne === center && center === sw && ne !== false)
 		);
+	}
+
+	function setPlayerNames() {
+		const player1Name = document.querySelector("#player-1-name");
+		const player2Name = document.querySelector("#player-2-name");
+
+		if (player1Name.value) player1.setName(player1Name.value);
+		if (player2Name.value) player2.setName(player2Name.value);
+		[player1Name, player2Name].forEach((x) => (x.value = ""));
 	}
 
 	function render() {
