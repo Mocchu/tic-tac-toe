@@ -173,8 +173,16 @@ game = (function () {
 		const player1Name = document.querySelector("#player-1-name");
 		const player2Name = document.querySelector("#player-2-name");
 
-		if (player1Name.value) player1.setName(player1Name.value);
-		if (player2Name.value) player2.setName(player2Name.value);
+		if (player1Name.value) {
+			player1.setName(player1Name.value);
+		} else {
+			player1.setName("Player 1");
+		}
+		if (player2Name.value) {
+			player2.setName(player2Name.value);
+		} else {
+			player2.setName("Player 2");
+		}
 		[player1Name, player2Name].forEach((x) => (x.value = ""));
 	}
 
