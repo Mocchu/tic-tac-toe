@@ -45,6 +45,8 @@ game = (function () {
 	resetBoardBtn.addEventListener("click", resetBoard);
 
 	gotoMenuBtn.addEventListener("click", () => {
+		player1.setName("Player 1");
+		player2.setName("Player 2");
 		resetBoard();
 		displayGame();
 	});
@@ -140,12 +142,15 @@ game = (function () {
 
 		for (let row = 0; row < 3; row++) {
 			let markers = [];
+
 			for (let col = 0; col < 3; col++) {
 				// Swap indexes based on direction argument
 				const i = direction === "row" ? row : col;
 				const j = direction === "row" ? col : row;
 				markers.push(unflatBoard[i][j].getMarker());
 			}
+
+			// Check if all 3 in a line are same
 			if (
 				markers[0] === markers[1] &&
 				markers[1] === markers[2] &&
@@ -173,16 +178,8 @@ game = (function () {
 		const player1Name = document.querySelector("#player-1-name");
 		const player2Name = document.querySelector("#player-2-name");
 
-		if (player1Name.value) {
-			player1.setName(player1Name.value);
-		} else {
-			player1.setName("Player 1");
-		}
-		if (player2Name.value) {
-			player2.setName(player2Name.value);
-		} else {
-			player2.setName("Player 2");
-		}
+		if (player1Name.value) player1.setName(player1Name.value);
+		if (player2Name.value) player2.setName(player2Name.value);
 		[player1Name, player2Name].forEach((x) => (x.value = ""));
 	}
 
